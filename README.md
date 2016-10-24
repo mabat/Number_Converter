@@ -1,5 +1,8 @@
 ## Number Converter
 ###Java Swing program for Decimal - Octal - Hexadecimal - Binary coversion
-I used a proprietary algorithm for conversion.
+I used a proprietary algorithm for conversion and addition.
 
-![Alt text](http://i.imgur.com/ls9X8DS.png)
+![Alt text](http://i.imgur.com/7nq4741.png)
+
+
+![Alt text](http://i.imgur.com/WGbWs28.png)
