@@ -4,7 +4,15 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
         initComponents();
-        init = new Initialization();
+        conv = new Conversion();
+        oper = new Operation();
+
+        comboNumType.addItem("Decimal");
+        comboNumType.addItem("Octal");
+        comboNumType.addItem("Hexadecimal");
+        comboNumType.addItem("Binary");
+        comboOperationType.addItem("+");
+
     }
 
     /**
@@ -26,37 +34,50 @@ public class MainFrame extends javax.swing.JFrame {
         textOct = new javax.swing.JTextField();
         textHex = new javax.swing.JTextField();
         textBin = new javax.swing.JTextField();
+        comboNumType = new javax.swing.JComboBox<>();
+        comboOperationType = new javax.swing.JComboBox<>();
+        textX = new javax.swing.JTextField();
+        textY = new javax.swing.JTextField();
+        textResult = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Number Converter");
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
-        jPanel1Layout.columnWidths = new int[] {0, 7, 0, 7, 0, 7, 0, 7, 0};
-        jPanel1Layout.rowHeights = new int[] {0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0};
+        jPanel1Layout.columnWidths = new int[] {0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0};
+        jPanel1Layout.rowHeights = new int[] {0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0};
         labelHex.setLayout(jPanel1Layout);
 
         lebelDec.setText("Decimal");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         labelHex.add(lebelDec, gridBagConstraints);
 
         labelOct.setText("Octal");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         labelHex.add(labelOct, gridBagConstraints);
 
         jLabel3.setText("Hexadecimal");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         labelHex.add(jLabel3, gridBagConstraints);
 
         labelBIn.setText("Binary");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         labelHex.add(labelBIn, gridBagConstraints);
 
         textDec.setPreferredSize(new java.awt.Dimension(200, 23));
@@ -103,15 +124,85 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.gridy = 8;
         labelHex.add(textBin, gridBagConstraints);
 
+        comboNumType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboNumTypeActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        labelHex.add(comboNumType, gridBagConstraints);
+
+        comboOperationType.setSelectedIndex(-1);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        labelHex.add(comboOperationType, gridBagConstraints);
+
+        textX.setPreferredSize(new java.awt.Dimension(200, 23));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 14;
+        labelHex.add(textX, gridBagConstraints);
+
+        textY.setPreferredSize(new java.awt.Dimension(200, 23));
+        textY.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                textYCaretUpdate(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 16;
+        labelHex.add(textY, gridBagConstraints);
+
+        textResult.setEditable(false);
+        textResult.setPreferredSize(new java.awt.Dimension(200, 23));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 18;
+        labelHex.add(textResult, gridBagConstraints);
+
+        jLabel1.setText("1st num:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        labelHex.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setText("2nd num:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        labelHex.add(jLabel2, gridBagConstraints);
+
+        jLabel4.setText("Sum:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        labelHex.add(jLabel4, gridBagConstraints);
+
+        jSeparator1.setPreferredSize(new java.awt.Dimension(300, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 7;
+        labelHex.add(jSeparator1, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelHex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelHex, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelHex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelHex, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
         );
 
         pack();
@@ -122,9 +213,10 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             dec = textDec.getText();
             int d = Integer.parseInt(dec);
-            textOct.setText(init.decToOct(d));
-            textHex.setText(init.decToHex(d));
-            textBin.setText(init.decToBin(d));
+
+            textOct.setText(conv.decToOct(d));
+            textHex.setText(conv.decToHex(d));
+            textBin.setText(conv.decToBin(d));
         } catch (Exception e) {
 
         }
@@ -134,44 +226,72 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             oct = textOct.getText();
             int oc = Integer.parseInt(oct);
-
-            textDec.setText(init.octToDec(oc));
-            textBin.setText(init.octToBin(oc));
-            textHex.setText(init.octToHex(oc));
+            textDec.setText(conv.octToDec(oc));
+            textBin.setText(conv.octToBin(oc));
+            textHex.setText(conv.octToHex(oc));
         } catch (Exception e) {
-
         }
-
     }//GEN-LAST:event_textOctCaretUpdate
 
     private void textHexCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_textHexCaretUpdate
 
         try {
             hex = textHex.getText().toUpperCase();
-
-            textDec.setText(init.hexToDec(hex));
+            textDec.setText(conv.hexToDec(hex));
             //oct vuce od dec
-            textBin.setText(init.hexToBin(hex));
-
+            textBin.setText(conv.hexToBin(hex));
         } catch (Exception e) {
-
         }
-
     }//GEN-LAST:event_textHexCaretUpdate
 
     private void textBinCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_textBinCaretUpdate
-
         try {
             bin = textBin.getText();
+            textDec.setText(conv.binToDec(bin));
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_textBinCaretUpdate
 
-            textDec.setText(init.binToDec(bin));
+    private void textYCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_textYCaretUpdate
+
+        try {
+            X = textX.getText().toUpperCase();
+            Y = textY.getText().toUpperCase();
+
+            if (comboNumType.getSelectedItem().equals("Octal")) {
+                String sum = oper.octalSum(X, Y);
+                textResult.setText(sum);
+                textOct.setText(sum);
+            } else if (comboNumType.getSelectedItem().equals("Hexadecimal")) {
+                String sum = oper.hexSum(X, Y);
+                textResult.setText(sum);
+                textHex.setText(sum);
+            } else if (comboNumType.getSelectedItem().equals("Decimal")) {
+                String sum = oper.decSum(X, Y);
+                textResult.setText(sum);
+                textDec.setText(sum);
+            } else if (comboNumType.getSelectedItem().equals("Binary")) {
+                String sum = oper.binSum(X, Y);
+                textResult.setText(sum);
+                textBin.setText(sum);
+            }
 
         } catch (Exception e) {
 
         }
 
+    }//GEN-LAST:event_textYCaretUpdate
 
-    }//GEN-LAST:event_textBinCaretUpdate
+    private void comboNumTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboNumTypeActionPerformed
+
+        textX.setText(null);
+        textY.setText(null);
+        textResult.setText(null);
+        textBin.setText(null);
+        textDec.setText(null);
+        textHex.setText(null);
+        textOct.setText(null);
+    }//GEN-LAST:event_comboNumTypeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,7 +329,13 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboNumType;
+    private javax.swing.JComboBox<String> comboOperationType;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelBIn;
     private javax.swing.JPanel labelHex;
     private javax.swing.JLabel labelOct;
@@ -218,10 +344,16 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField textDec;
     private javax.swing.JTextField textHex;
     private javax.swing.JTextField textOct;
+    private javax.swing.JTextField textResult;
+    private javax.swing.JTextField textX;
+    private javax.swing.JTextField textY;
     // End of variables declaration//GEN-END:variables
-    private final Initialization init;
+    private final Conversion conv;
     private String dec;
     private String oct;
     private String bin;
     private String hex;
+    private final Operation oper;
+    private String X;
+    private String Y;
 }
